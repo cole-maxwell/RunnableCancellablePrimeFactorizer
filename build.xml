@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  To run this build script, type: 
+
+  ant -f build.xml
+
+  in a shell. 
+-->
+
+<project name="RunnableCancellablePrimeFactorizer" basedir="."  default="clean">
+
+	<property environment="env"/>
+    <property name="src" location="src" />
+	<property name="bin" location="bin" />
+
+    <path id="classpath">
+		<pathelement location="bin" />
+	</path>
+
+	<target name="init">
+        <mkdir dir="${bin}"/>
+	</target>
+	
+	<target name="compile" depends="init">
+		<javac srcdir="${src}" destdir="${bin}" includeAntRuntime="false">
+            <classpath refid="classpath"/>	
+			<include name="cs681/*.java"/>
+		</javac>
+	</target>
+
+	<target name="run" depends="compile">
+		<java 	classname="cs681.RunnableCancellablePrimeFactorizer"
+				classpathref="classpath"  
+				fork="true"/>
+	</target>
+
+	<target name="clean" depends="run">
+		<delete includeemptydirs="true">
+			<fileset dir="${bin}/cs681" includes="**/*"/>
+		</delete>
+	</target>
+
+	<target name="reset">
+		<delete includeemptydirs="true">
+			<fileset dir="${bin}"/>
+		</delete>
+	</target>
+
+</project>
